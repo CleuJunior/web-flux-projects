@@ -7,12 +7,20 @@ import java.util.List;
 
 public class FluxAndMonoGeneratorService {
 
-    private static Flux<String> namesFux(String... args) {
-        return Flux.fromIterable(List.of(args));
+    public static Flux<String> namesFux(String... args) {
+        return reactor.core.publisher.Flux.fromIterable(List.of(args))
+                .log();
     }
 
-    private static Mono<String> nameMono(String... args) {
-        return Mono.just(args[0]);
+    public static Mono<String> nameMono(String... args) {
+        return Mono.just(args[0])
+                .log();
+    }
+
+    public static Flux<String> nameFluxMap(String... args) {
+        return Flux.fromArray(args)
+                .map(String::toUpperCase)
+                .log();
     }
 
 
